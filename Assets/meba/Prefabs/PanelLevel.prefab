@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 4114809492711163214}
   - component: {fileID: 4114809492711163212}
   - component: {fileID: 4114809492711163213}
-  - component: {fileID: 8279471625740052931}
+  - component: {fileID: 9049844469836167906}
   m_Layer: 5
   m_Name: PanelLevel
   m_TagString: Untagged
@@ -338,7 +338,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8279471625740052931
+--- !u!114 &9049844469836167906
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -347,17 +347,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4114809492711163215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42b7bbbba4569074ab0e02ebc49109b1, type: 3}
+  m_Script: {fileID: 11500000, guid: fc792e9f5b990d540af854759826fbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  open: {fileID: 21300000, guid: b2889c4b7b6c8b2428b0d9b92f6dd2e8, type: 3}
-  locked: {fileID: 21300000, guid: 2efb6df5b9657464c937b91c2b0c7726, type: 3}
-  myImage: {fileID: 1996404436402925808}
-  myButton: {fileID: 4884522598370059482}
-  titleTMP: {fileID: 1276487918350854551}
-  levelTMP: {fileID: 2403660959765952003}
-  highTMP: {fileID: 6173933485126336087}
-  buttonTMP: {fileID: 5246366242541537519}
 --- !u!1 &4289420887630789346
 GameObject:
   m_ObjectHideFlags: 0
