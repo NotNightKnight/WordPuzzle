@@ -2097,8 +2097,6 @@ GameObject:
   - component: {fileID: 1695249996}
   - component: {fileID: 1695249998}
   - component: {fileID: 1695249997}
-  - component: {fileID: 1695250000}
-  - component: {fileID: 1695250001}
   m_Layer: 5
   m_Name: PanelWordArea
   m_TagString: Untagged
@@ -2174,34 +2172,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695249995}
   m_CullTransparentMesh: 1
---- !u!114 &1695250000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1695249995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f95a2d30d56b1a44d9900f9827dfc3bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parser: {fileID: 1695250001}
-  titleTMP: {fileID: 1445462915}
-  letterTiles: {fileID: 1514949719}
-  tilePrefab: {fileID: 6415366879948647050, guid: 005a0adaf3810f244acc4bb0881d775c, type: 3}
---- !u!114 &1695250001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1695249995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2ebc21ff8f83524586841201c88f843, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1816492783
 GameObject:
   m_ObjectHideFlags: 0
@@ -2554,5 +2524,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6415366879948647041, guid: 005a0adaf3810f244acc4bb0881d775c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 005a0adaf3810f244acc4bb0881d775c, type: 3}

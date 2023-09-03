@@ -121,7 +121,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1996404436402925808}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9049844469836167906}
+        m_TargetAssemblyTypeName: meba.menu.PanelLevel, Assembly-CSharp
+        m_MethodName: OpenLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3612649807808837066
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +362,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc792e9f5b990d540af854759826fbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  open: {fileID: 21300000, guid: b2889c4b7b6c8b2428b0d9b92f6dd2e8, type: 3}
+  closed: {fileID: 21300000, guid: 2efb6df5b9657464c937b91c2b0c7726, type: 3}
+  titleTMP: {fileID: 1276487918350854551}
+  levelTMP: {fileID: 2403660959765952003}
+  highscoreTMP: {fileID: 6173933485126336087}
+  buttonTMP: {fileID: 5246366242541537519}
+  myButton: {fileID: 4884522598370059482}
+  buttonImg: {fileID: 1996404436402925808}
 --- !u!1 &4289420887630789346
 GameObject:
   m_ObjectHideFlags: 0

@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 6415366879948647055}
   - component: {fileID: 6415366879948647052}
   - component: {fileID: 6415366879948647053}
-  - component: {fileID: 6415366879948647041}
+  - component: {fileID: 3168227507106382431}
   m_Layer: 5
   m_Name: Tile
   m_TagString: Untagged
@@ -257,8 +257,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6415366879948647052}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &6415366879948647041
+      m_Calls:
+      - m_Target: {fileID: 3168227507106382431}
+        m_TargetAssemblyTypeName: meba.MyTile, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3168227507106382431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,10 +279,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6415366879948647050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c2804ecec3c33a43acb1c5ff3fd782a, type: 3}
+  m_Script: {fileID: 11500000, guid: e34e7ee53facae047a810b9827f983a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charTMP: {fileID: 6415366878785897073}
   id: 0
-  position: {x: 0, y: 0, z: 0}
   character: 
   children: 
