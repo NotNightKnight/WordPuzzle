@@ -80,6 +80,31 @@ namespace meba.menu
             game.alpha = 0;
             game.interactable = false;
             game.blocksRaycasts = false;
+
+            json.LoadFromJson();
+            levelList = json.GetLevelList();
+            saveList = json.GetSaveList();
+
+            for (int i = 0; i < levelList.Count; i++)
+            {
+                bool unlocked;
+                string title, level, highscore;
+                title = levelList[i].title;
+                level = (i + 1).ToString();
+                highscore = saveList[i].highscore.ToString();
+                unlocked = saveList[i].open;
+
+                panelLevelList[i].SetPanelLevel(title, level, highscore);
+
+                if (unlocked)
+                {
+                    panelLevelList[i].SetLevelOpen();
+                }
+                else
+                {
+                    panelLevelList[i].SetLevelClosed();
+                }
+            }
         }
     }
 }

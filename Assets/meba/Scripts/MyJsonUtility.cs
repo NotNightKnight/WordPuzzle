@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace meba
 {
@@ -12,11 +14,15 @@ namespace meba
 
         private string path = "Assets/Levels/";
         private string savePath = "Assets/meba/Saves/";
+        private string currentLevelPath = "Assets/meba/currentLevel.txt";
 
         public void LoadFromJson()
         {
             Level level = new Level();
             Save save = new Save();
+
+            levelList = new List<Level>();
+            saveList = new List<Save>();
 
             for(int i = 1; i <= 20; i++)
             {
@@ -48,6 +54,24 @@ namespace meba
         public Save GetSave(int curLevel)
         {
             return saveList[curLevel - 1];
+        }
+
+        public void SaveHighscoreChanged(int score)
+        {
+            Save save = new Save();
+            int curLevel = Int32.Parse(File.ReadAllText(currentLevelPath));
+
+            save.highscore = score;
+            save.open = true;
+
+            string jsonData = JsonUtility.ToJson(save);
+            File.WriteAllText(savePath + "save_" + curLevel + ".json", jsonData);
+
+            save.highscore = 0;
+            save.open = true;
+
+            jsonData = JsonUtility.ToJson(save);
+            File.WriteAllText(savePath + "save_" + (curLevel + 1) + ".json", jsonData);
         }
     }
 

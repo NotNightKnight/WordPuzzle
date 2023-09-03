@@ -29,7 +29,7 @@ namespace meba.menu
         public void SetPanelLevel(string tit, string lvl, string hs)
         {
             titleTMP.text = tit;
-            levelTMP.text = lvl;
+            levelTMP.text = "LEVEL " + lvl;
             highscoreTMP.text = hs;
 
             level = lvl;

@@ -37,6 +37,15 @@ namespace meba
         [SerializeField]
         private TextMeshProUGUI writtenWordsTMP;
 
+        [SerializeField]
+        private ScoreCalculator scoreCalculator;
+
+        [SerializeField]
+        private TextMeshProUGUI sumScoreTMP, wordScoreTMP;
+
+        [SerializeField]
+        private PanelEndLevel panelEndLevel;
+
         private List<MyTile> wordArea = new List<MyTile>();
 
         private List<MyTile> tileList = new List<MyTile>();
@@ -47,6 +56,10 @@ namespace meba
 
         private Level level;
         private Save save;
+
+        private int sumScore = 0;
+
+        private bool gameEnded = true;
 
         //private void Start()
         //{
@@ -66,37 +79,40 @@ namespace meba
 
         public void OpenLevel()
         {
-            Camera camera = Camera.main;
-            writtenWordsTMP.text = string.Empty;
-
-            int currentLevel = Int32.Parse(File.ReadAllText("Assets/meba/currentLevel.txt"));
-            level = json.GetLevel(currentLevel);
-            save = json.GetSave(currentLevel);
-
-            titleTMP.text = level.title;
-
-            foreach (Tile tile in level.tiles)
+            if(gameEnded)
             {
-                GameObject newTile = Instantiate(tilePrefab, parentLetterTiles);
-                newTile.transform.position = ChangePos(tile.position);
-                //newTile.AddComponent<MyTile>();
-                newTile.GetComponent<MyTile>().id = tile.id;
-                newTile.GetComponent<MyTile>().position = ChangePos(tile.position);
-                newTile.GetComponent<MyTile>().character = tile.character;
-                newTile.GetComponent<MyTile>().children = tile.children;
+                writtenWordsTMP.text = string.Empty;
 
-                newTile.GetComponent<MyTile>().panelWord = this;
+                int currentLevel = Int32.Parse(File.ReadAllText("Assets/meba/currentLevel.txt"));
+                level = json.GetLevel(currentLevel);
+                save = json.GetSave(currentLevel);
 
-                tileList.Add(newTile.GetComponent<MyTile>());
-                remainedTileList.Add(newTile.GetComponent<MyTile>());
-            }
+                titleTMP.text = level.title;
 
-            foreach(MyTile tile in tileList)
-            {
-                foreach(int childID in tile.children)
+                foreach (Tile tile in level.tiles)
                 {
-                    tileList[childID].GetComponent<Button>().interactable = false;
+                    GameObject newTile = Instantiate(tilePrefab, parentLetterTiles);
+                    newTile.transform.position = ChangePos(tile.position);
+                    //newTile.AddComponent<MyTile>();
+                    newTile.GetComponent<MyTile>().id = tile.id;
+                    newTile.GetComponent<MyTile>().position = ChangePos(tile.position);
+                    newTile.GetComponent<MyTile>().character = tile.character;
+                    newTile.GetComponent<MyTile>().children = tile.children;
+
+                    newTile.GetComponent<MyTile>().panelWord = this;
+
+                    tileList.Add(newTile.GetComponent<MyTile>());
+                    remainedTileList.Add(newTile.GetComponent<MyTile>());
                 }
+
+                foreach (MyTile tile in tileList)
+                {
+                    foreach (int childID in tile.children)
+                    {
+                        tileList[childID].GetComponent<Button>().interactable = false;
+                    }
+                }
+                gameEnded = false;
             }
         }
 
@@ -163,6 +179,12 @@ namespace meba
                 {
                     writtenWordsTMP.text += word.ToUpper() + Environment.NewLine;
                     writtenWords.Add(word);
+
+                    int score = scoreCalculator.CalculateScore(word);
+                    sumScore += score;
+                    wordScoreTMP.text = "WORD SCORE: " + score;
+                    sumScoreTMP.text = "SCORE: " + sumScore;
+
                     foreach (MyTile tile in wordArea)
                     {
                         remainedTileList.Remove(tile);
@@ -176,9 +198,10 @@ namespace meba
 
         private void CheckGameState()
         {
+            bool canBeMade = true;
             if(remainedTileList.Count == 0)
             {
-                //EndLevel();
+                EndLevel();
             }
             else
             {
@@ -213,7 +236,7 @@ namespace meba
                         }
                     }
 
-                    bool canBeMade = true;
+                    canBeMade = true;
 
                     foreach (var letterCount in wordLetters)
                     {
@@ -226,6 +249,7 @@ namespace meba
 
                     if(canBeMade)
                     {
+                        //Debug.Log(word);
                         break;
                     }
                     else
@@ -233,12 +257,32 @@ namespace meba
                         continue;
                     }
                 }
+                if(!canBeMade)
+                {
+                    EndLevel();
+                }
             }
         }
 
         private void EndLevel()
         {
-            Debug.Log("level ended");
+            sumScore -= remainedTileList.Count * 100;
+
+            if(sumScore > save.highscore)
+            {
+                //more particles
+                panelEndLevel.ExtraParticle();
+                json.SaveHighscoreChanged(sumScore);
+            }
+            else
+            {
+                //particle
+                panelEndLevel.Particle();
+                json.SaveHighscoreChanged(save.highscore);
+            }
+
+            gameEnded = true;
+            Invoke(nameof(scrollViewLevelMenu.CloseLevel), 5f);
         }
     }
 }
