@@ -20,6 +20,12 @@ namespace meba.menu
         [SerializeField]
         private PanelWordArea wordArea;
 
+        [SerializeField]
+        private Animation levelMenuAnimation;
+
+        [SerializeField]
+        private Animation levelAnimation;
+
         private List<PanelLevel> panelLevelList = new List<PanelLevel>();
 
         private List<Level> levelList = new List<Level>();
@@ -28,7 +34,7 @@ namespace meba.menu
 
         private void Start()
         {
-            foreach(PanelLevel panelLevel in parentPanelLevel.GetComponentsInChildren<PanelLevel>())
+            foreach (PanelLevel panelLevel in parentPanelLevel.GetComponentsInChildren<PanelLevel>())
             {
                 panelLevelList.Add(panelLevel);
             }
@@ -62,14 +68,21 @@ namespace meba.menu
         public void OpenLevel(string lvl)
         {
             File.WriteAllText("Assets/meba/currentLevel.txt", lvl);
-            levelMenu.alpha = 0;
+            //levelMenu.alpha = 0;
             levelMenu.interactable = false;
             levelMenu.blocksRaycasts = false;
-            game.alpha = 1;
+            
+            levelMenuAnimation.Play();
+            Invoke(nameof(AnimateLevel), 1f);
+            wordArea.OpenLevel();
+        }
+
+        private void AnimateLevel()
+        {
+            levelAnimation.Play();
+            //game.alpha = 1;
             game.interactable = true;
             game.blocksRaycasts = true;
-
-            wordArea.OpenLevel();
         }
 
         public void CloseLevel()
@@ -105,6 +118,11 @@ namespace meba.menu
                     panelLevelList[i].SetLevelClosed();
                 }
             }
+        }
+
+        public void OnClickBack()
+        {
+            SceneManager.LoadScene("Menu");
         }
     }
 }

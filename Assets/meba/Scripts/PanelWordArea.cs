@@ -8,6 +8,7 @@ using System.Linq;
 using TMPro;
 using meba.menu;
 using UnityEngine.UI;
+using Unity.Mathematics;
 
 namespace meba
 {
@@ -46,6 +47,15 @@ namespace meba
         [SerializeField]
         private PanelEndLevel panelEndLevel;
 
+        [SerializeField]
+        private TextMeshProUGUI endLevelScore;
+
+        [SerializeField]
+        private Canvas canvasEndLevel;
+
+        [SerializeField]
+        private CanvasGroup gameCanvas;
+
         private List<MyTile> wordArea = new List<MyTile>();
 
         private List<MyTile> tileList = new List<MyTile>();
@@ -53,6 +63,8 @@ namespace meba
         private List<string> writtenWords = new List<string>();
 
         private List<MyTile> remainedTileList = new List<MyTile>();
+
+        private List<MyTile> tempTiles = new List<MyTile>();
 
         private Level level;
         private Save save;
@@ -188,12 +200,27 @@ namespace meba
                     foreach (MyTile tile in wordArea)
                     {
                         remainedTileList.Remove(tile);
-                        tile.gameObject.SetActive(false);
+
+                        tempTiles.Add(tile);
+
+                        Vector3 target = tile.transform.position + Vector3.up * 350f;
+                        tile.transform.DOMove(target, 1f);
                     }
                     wordArea.Clear();
-                    CheckGameState();
+                    Invoke(nameof(RemoveTiles), 1f);
                 }
             }
+        }
+
+        private void RemoveTiles()
+        {
+            foreach (MyTile tile in tempTiles)
+            {
+                tile.gameObject.SetActive(false);
+            }
+
+            //wordArea.Clear();
+            CheckGameState();
         }
 
         private void CheckGameState()
@@ -264,25 +291,44 @@ namespace meba
             }
         }
 
-        private void EndLevel()
+        public void EndLevel()
         {
             sumScore -= remainedTileList.Count * 100;
 
-            if(sumScore > save.highscore)
+            canvasEndLevel.gameObject.SetActive(true);
+            gameCanvas.alpha = 0;
+            gameCanvas.interactable = false;
+            gameCanvas.blocksRaycasts = false;
+            //canvasEndLevel.GetComponent<CanvasGroup>().alpha = 1;
+            //canvasEndLevel.GetComponent<CanvasGroup>().interactable = true;
+            //canvasEndLevel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+            if (sumScore > save.highscore)
             {
                 //more particles
                 panelEndLevel.ExtraParticle();
                 json.SaveHighscoreChanged(sumScore);
+                endLevelScore.text = "NEW HIGHSCORE: " + sumScore;
             }
             else
             {
                 //particle
                 panelEndLevel.Particle();
                 json.SaveHighscoreChanged(save.highscore);
+                endLevelScore.text = "SCORE: " + save.highscore;
             }
 
             gameEnded = true;
-            Invoke(nameof(scrollViewLevelMenu.CloseLevel), 5f);
+            //Invoke(nameof(scrollViewLevelMenu.CloseLevel), 5f);
+        }
+
+        public void OnClickReset()
+        {
+            //string curLevel = File.ReadAllText("Assets/meba/currentLevel.txt");
+
+            //gameEnded = true;
+            //scrollViewLevelMenu.CloseLevel();
+            //scrollViewLevelMenu.OpenLevel(curLevel);
         }
     }
 }
